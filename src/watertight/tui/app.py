@@ -12,6 +12,7 @@ from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
 from textual.css.query import NoMatches
+from textual.widget import Widget
 from textual.widgets import Footer, ProgressBar, Static
 
 from .. import __version__
@@ -300,7 +301,7 @@ class WatertightApp(App):
             self.table.refresh_job(job)
 
     def _pump(self) -> None:
-        if self._ui("#queue") is None:  # the screen is starting or closing
+        if self._ui("#queue", Widget) is None:  # the screen is starting or closing
             return
         changed = self.mgr.poll()
         for jid in changed:
