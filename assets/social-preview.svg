@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 640" width="1280" height="640">
+  <rect width="1280" height="640" fill="#0B1F33"/>
+  <rect x="0" y="624" width="1280" height="16" fill="#0284C7"/>
+  <g transform="translate(110 150) scale(0.66)">
+    <rect width="512" height="512" rx="112" fill="#12304D"/>
+    
+  
+  <!-- low-poly water drop: a closed mesh with no gaps -->
+  <g stroke="#12304D" stroke-width="5" stroke-linejoin="round">
+    <polygon points="256,64 168,228 256,262" fill="#7DD3FC"/>
+    <polygon points="256,64 256,262 344,228" fill="#38BDF8"/>
+    <polygon points="168,228 128,318 256,262" fill="#38BDF8"/>
+    <polygon points="344,228 256,262 384,318" fill="#0EA5E9"/>
+    <polygon points="128,318 160,396 256,262" fill="#0EA5E9"/>
+    <polygon points="384,318 256,262 352,396" fill="#0284C7"/>
+    <polygon points="160,396 256,448 256,262" fill="#0284C7"/>
+    <polygon points="352,396 256,262 256,448" fill="#0369A1"/>
+  </g>
+  <!-- the seal: a check mark across the drop -->
+  <path d="M196 300 L244 346 L330 238" fill="none" stroke="#F0F9FF" stroke-width="26"
+        stroke-linecap="round" stroke-linejoin="round"/>
+
+  </g>
+  <text x="520" y="290" font-family="Menlo, 'SF Mono', ui-monospace, Consolas, 'Liberation Mono', monospace" font-size="112" font-weight="700" fill="#F0F9FF" letter-spacing="-3">watertight</text>
+  <text x="524" y="356" font-family="Menlo, 'SF Mono', ui-monospace, Consolas, 'Liberation Mono', monospace" font-size="34" fill="#7DD3FC">Repair STL files for 3D printing.</text>
+  <text x="524" y="420" font-family="Menlo, 'SF Mono', ui-monospace, Consolas, 'Liberation Mono', monospace" font-size="23" fill="#94A3B8">Free. Open source. Never changes your original.</text>
+  <text x="524" y="476" font-family="Menlo, 'SF Mono', ui-monospace, Consolas, 'Liberation Mono', monospace" font-size="26" fill="#38BDF8">github.com/Sarteg/watertight</text>
+</svg>

@@ -4,7 +4,7 @@
 
 <p align="center">
   <a href="https://github.com/Sarteg/watertight/actions/workflows/ci.yml"><img src="https://github.com/Sarteg/watertight/actions/workflows/ci.yml/badge.svg" alt="CI"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license"></a>
+  <a href="https://github.com/Sarteg/watertight/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="MIT license"></a>
   <img src="https://img.shields.io/badge/python-3.10%2B-blue.svg" alt="Python 3.10+">
 </p>
 
