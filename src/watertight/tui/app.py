@@ -11,6 +11,8 @@ from rich.text import Text
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
+from textual.css.query import NoMatches
+from textual.widget import Widget
 from textual.widgets import Footer, ProgressBar, Static
 
 from .. import __version__
@@ -147,13 +149,23 @@ class WatertightApp(App):
 
     def _apply_size(self) -> None:
         w, h = self.size
-        self.query_one("#toosmall").display = w < MIN_WIDTH or h < MIN_HEIGHT
+        if (box := self._ui("#toosmall")) is not None:
+            box.display = w < MIN_WIDTH or h < MIN_HEIGHT
         self.screen.set_class(w < NARROW_BELOW, "narrow")
 
     # ---- small UI helpers --------------------------------------------------------------------
+    def _ui(self, selector: str, kind=Static):
+        """A widget of the main screen, or None while the screen is starting or closing.
+        The 0.1 s timer can fire in those moments, and a dialog may be on top."""
+        try:
+            return self.screen_stack[0].query_one(selector, kind)
+        except (NoMatches, IndexError):
+            return None
+
     def set_message(self, text: str) -> None:
         self._message = text
-        self.query_one("#message", Static).update(text)
+        if (w := self._ui("#message")) is not None:
+            w.update(text)
 
     @property
     def table(self) -> QueueTable:
@@ -175,13 +187,17 @@ class WatertightApp(App):
         )
         if self.mgr.paused:
             txt += " │ PAUSED"
-        self.query_one("#topbar", Static).update(Text(txt, no_wrap=True, overflow="ellipsis"))
+        if (bar := self._ui("#topbar")) is not None:
+            bar.update(Text(txt, no_wrap=True, overflow="ellipsis"))
 
     def _refresh_overall(self) -> None:
         jobs = self.mgr.jobs
         total = len(jobs)
         finished = sum(1 for j in jobs if j.final)
-        bar = self.query_one("#overall-bar", ProgressBar)
+        bar = self._ui("#overall-bar", ProgressBar)
+        text = self._ui("#overall-text")
+        if bar is None or text is None:
+            return
         bar.update(total=max(1, total), progress=finished)
         c = self.mgr.counts()
         bits = [f"{finished}/{total} finished"]
@@ -196,12 +212,13 @@ class WatertightApp(App):
             eta = self.mgr.eta_seconds()
             if eta is not None and not self.mgr.idle:
                 bits.append(f"~{fmt_time(eta)} left")
-        self.query_one("#overall-text", Static).update(" · ".join(bits))
+        text.update(" · ".join(bits))
 
     def _show_details(self, job_id: int | None) -> None:
         job = self.mgr.get(job_id) if job_id is not None else None
         text = "\n".join(job_details(job)) if job else "Select files, then press Enter."
-        self.query_one("#details", Static).update(Text(text))
+        if (box := self._ui("#details")) is not None:
+            box.update(Text(text))
 
     # ---- selection ---------------------------------------------------------------------------
     def toggle_path(self, path: Path) -> None:
@@ -284,6 +301,8 @@ class WatertightApp(App):
             self.table.refresh_job(job)
 
     def _pump(self) -> None:
+        if self._ui("#queue", Widget) is None:  # the screen is starting or closing
+            return
         changed = self.mgr.poll()
         for jid in changed:
             job = self.mgr.get(jid)
