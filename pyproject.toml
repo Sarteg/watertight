@@ -1,0 +1,58 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "watertight"
+dynamic = ["version"]
+description = "Free, open-source terminal app that repairs STL files for 3D printing."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [{ name = "watertight contributors" }]
+keywords = ["stl", "3d-printing", "mesh", "repair", "tui", "watertight"]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Environment :: Console",
+  "Topic :: Multimedia :: Graphics :: 3D Modeling",
+]
+dependencies = [
+  "trimesh>=4.0",
+  "numpy>=1.24",
+  "scipy>=1.10",
+  "networkx>=3.0",
+  "manifold3d>=2.5",
+  "textual>=0.80",
+]
+
+[project.optional-dependencies]
+# pymeshfix is GPL-3.0 (its PyPI metadata also says AGPL-3.0). It is installed only when asked.
+meshfix = ["pymeshfix>=0.17"]
+dev = ["pytest>=8", "pytest-asyncio>=0.23", "ruff>=0.5", "psutil>=5.9", "pip-licenses>=5"]
+
+[project.urls]
+Homepage = "https://github.com/Sarteg/watertight"
+Issues = "https://github.com/Sarteg/watertight/issues"
+Changelog = "https://github.com/Sarteg/watertight/blob/main/CHANGELOG.md"
+
+[project.scripts]
+watertight = "watertight.cli:main"
+
+[tool.hatch.version]
+path = "src/watertight/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/watertight"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+markers = ["slow: slow tests", "meshfix: needs pymeshfix"]
+
+[tool.ruff]
+line-length = 110
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]

@@ -1,0 +1,34 @@
+Screen { layers: base overlay; }
+
+#topbar { height: 1; background: $primary-background; color: $text; padding: 0 1; }
+
+#panes { height: 1fr; }
+#explorer-pane { width: 40%; border: round $primary-background-lighten-2; }
+#queue-pane { width: 60%; border: round $primary-background-lighten-2; }
+.pane-title { height: 1; color: $text-muted; text-style: bold; padding: 0 1; }
+#explorer { height: 1fr; }
+#queue { height: 1fr; }
+#explorer-pane:focus-within, #queue-pane:focus-within { border: round $accent; }
+
+#bottom { height: auto; padding: 0 1; }
+#overall-row { height: 1; }
+#overall-label { width: 9; }
+#overall-bar { width: 1fr; }
+#overall-text { width: auto; padding: 0 0 0 1; }
+#details-box { height: 8; border: round $primary-background-lighten-2; }
+#details { padding: 0 1; }
+#message { height: 1; color: $warning; }
+
+Screen.narrow #queue-pane { display: none; }
+Screen.narrow #explorer-pane { width: 100%; }
+Screen.narrow.queue-active #explorer-pane { display: none; }
+Screen.narrow.queue-active #queue-pane { display: block; width: 100%; }
+
+#toosmall { layer: overlay; width: 100%; height: 100%; background: $surface;
+            content-align: center middle; text-align: center; display: none; }
+
+ConfirmScreen, HelpScreen { align: center middle; }
+#dialog { width: 80; max-width: 95%; height: auto; padding: 1 2; background: $surface;
+          border: thick $accent; }
+#dialog-buttons { height: 3; align: center middle; }
+#dialog-buttons Button { margin: 0 2; }
