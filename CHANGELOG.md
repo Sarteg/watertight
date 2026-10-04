@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 (unreleased)
+## 0.1.0 (2026-10-05)
 
 First version.
 
@@ -9,7 +9,7 @@ First version.
 - Keep trying mode (`--refine`, `--refine-tries N`, key `f` in the TUI): tries other settings after a good repair, keeps the best, and tells you when it cannot get better.
 - The queue limits parallel jobs by memory, not only by worker count.
 - The details pane now lists the problems found, what each step did, and the shape check against its limits.
-- A repair that changes the shape by more than 25 % volume or 5 % size is not saved.
+- A repair that changes the volume by more than 2 %, the size by more than 0.1 %, or moves more than 1 % of the surface by more than the allowed distance is not saved.
 
 - Terminal UI (Textual): file explorer, multi-select, queue, per-file and overall progress.
 - Auto-start, parallel workers (default 4, up to CPU cores − 1), pause, cancel, retry.
