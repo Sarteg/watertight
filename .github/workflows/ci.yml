@@ -2,6 +2,7 @@ name: CI
 
 on:
   push:
+    branches: [main]
   pull_request:
 
 jobs:
@@ -54,3 +55,14 @@ jobs:
           pip install pip-licenses
       - name: Fail on GPL / AGPL
         run: pip-licenses --partial-match --fail-on="GNU" --ignore-packages watertight
+
+  ci-ok:
+    name: ci-ok
+    if: always()
+    needs: [test, licenses]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Every test and license job must have passed
+        run: |
+          echo "test: ${{ needs.test.result }}, licenses: ${{ needs.licenses.result }}"
+          [ "${{ needs.test.result }}" = "success" ] && [ "${{ needs.licenses.result }}" = "success" ]
